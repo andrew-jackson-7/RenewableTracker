@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Business Website</title>
+{% load static %}
+<link href=" {% static '/EIA/style2.css' %}" rel="stylesheet" type="text/css">
+<style type="text/css">
+body{
+	background: monospace;
+}
+.clock{
+	/*position: absolute;
+	top: 430px;
+	left: 518px;*/
+	height: 7%;
+	color: white;
+	font-family: "Roboto", sans-serif;
+	font-size: 30px;
+	text-align: center;
+}
+
+span {
+	color:red;
+	position: absolute;
+	top: 400px;
+	left: 518px;
+	font-family: "Roboto", sans-serif;
+	font-size: 30px;
+}
+
+button {
+	margin-top: 30px;
+	margin-left: 440px;
+	height: 30px;
+	width: 200px;
+	text-transform: uppercase;
+}
+
+/*input {
+	position: absolute;
+	top: 500px;
+	left: 518px;
+	color: white;
+	font-family: "Roboto", sans-serif;
+	background-color: darkorange;
+	font-size: 13px;
+	border: 1px solid white;
+	padding: 10px 30px;
+	text-transform: uppercase;
+}*/
+
+#get_file {
+	border: 1px solid white;
+	padding: 10px 30px;
+	color: white;
+	text-decoration: none;
+	/*left: 518px;*/
+	font-size: 13px;
+	text-transform: uppercase;
+	/*top: 500px;*/
+	background: none;
+}
+
+#upload_button_wrapper{
+	text-align: center;
+}
+
+#get_file:hover{
+	background-color: darkorange;
+	transition: all 0.5s ease-in;
+	cursor: pointer;
+}
+
+#customfileupload {
+	display:none;
+	position: absolute;
+	border: 1px solid white;
+	padding: 10px 30px;
+	color: white;
+	text-decoration: none;
+	left: 518px;
+	top: 600px;
+	font-size: 13px;
+	text-transform: uppercase;
+	overflow: hidden;
+	text-overflow: ellipses;
+}
+
+#my_file {
+	display: none;
+}
+
+</style>
+
+<!--<script src="https://code.jquery.com/jquery-1.10.2.js"></script>-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+<body>
+		<header>
+
+			<div id="row-menu" class="row">
+			<ul class="main-nav">
+				<li class="active"><a href=""> HOME </a></li>
+				<li><a href=""> ABOUT </a></li>
+				<li><a href="#"> SERVICES </a></li>
+				<li><a href=""> CONTACT </a></li>
+				<li><a href=""> NEWS </a></li>
+				<li><a href=""> FAQ </a></li>
+
+			</ul>
+
+			</div>
+
+			<div class="hero"></div>
+			<h1>Renewable Energy Tracking</h1>
+
+			<!--<span id="this-span"> 0 </span>
+
+			<button id="this-button-2">
+
+				Push Me!
+
+			</button>-->
+
+			<div class="button">
+				<a href="EIAquery.html" id="AnotherButton" class="btn btn-one"> Watch Video </a>
+				<!--<a href="" id="this-button" class="btn btn-two" onclick="window.open('index3.html');"> Explore More </a>-->
+				<a href="" id="this-button" class="btn btn-two"> Explore More </a>
+			</div>
+			<!--</div>-->
+
+			<div id="ClockDisplay" class="clock"></div>
+			<script type="text/javascript">
+
+				function clockTime(){
+					var date = new Date();
+					var h = date.getHours();
+					var m = date.getMinutes();
+					var s = date.getSeconds();
+					var session = "AM"
+
+					if(h == 0){
+						h == 12;
+					}
+
+					if (h > 12){
+						h = h - 12;
+						session = "PM";
+					}
+
+					h = (h < 10) ? "0" + h : h;
+					m = (m < 10) ? "0" + m : m;
+					s = (s < 10) ? "0" + s : s;
+
+					var time = h + ":" + m + ":" + s + " " + session;
+					document.getElementById("ClockDisplay").innerText = time;
+					document.getElementById("ClockDisplay").textContent = time;
+				}
+
+				clockTime()
+				setInterval(clockTime, 1000);
+
+			</script>
+
+			<!--<input id="load-page" type="button" value="View More" 
+       onclick="window.location = 'index3.html'" >-->
+       		<div id="upload_button_wrapper">
+       			<input type="button" id="get_file" value="Upload File">
+       		</div>
+
+			<input type="file" accept=".jpg,.png,.jpeg" id="my_file">
+
+			<div id="customfileupload">Choose a file</div>
+
+			<div id="photo-div">
+
+			<script type="text/javascript">
+
+				$(document).ready(function(){
+				    $("#row-menu li:nth-child(3)").click(function() {
+
+				    	myfunction();
+
+				    });
+				});
+
+				function myfunction() {
+					window.open('EIAquery.html', '_self')
+				};
+
+			</script>
+
+			<script type="text/javascript">
+
+				document.getElementById('get_file').onclick = function() {
+
+    				document.getElementById('my_file').click();
+
+				};
+
+				$('input[type=file]').change(function (e) {
+
+    				$('#customfileupload').html($(this).val());
+
+				});
+
+			</script>
+
+			<script type="text/javascript">
+
+			var img = new Image();
+
+			var div = document.getElementById()
+
+			</script>
+
+			<!--<script type="text/javascript">
+
+				var box = document.getElementById('this-button-2')
+
+				box.onclick = function() {
+
+					update(document.getElementById('this-span'));
+				}
+
+				function update( j ) {
+				var n = parseInt( j.text(), 10 );
+  				j.text( n + 1 );
+
+				}
+
+			</script>-->
+
+			<script type="text/javascript">
+
+				$( "#this-button-2" ).click(function() {
+					update( $( "span:first" ) );
+				})
+
+				function update( j ) {
+  				var n = parseInt( j.text(), 10 );
+  				j.text( n + 1 );
+				}
+
+			</script>
+
+			<script type="text/javascript">
+
+				function myfunction() {
+  				window.open('EIAquery.html', '_self');
+				}
+
+			</script>
+
+		</header>
+
+</body>
+</html>

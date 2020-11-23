@@ -1,0 +1,462 @@
+<!--When trouble shooting consider these steps:
+
+	1.) Make sure the virtual environment is enabled through using "source activate" in the bin folder.
+
+	2.) Make sure you establish a connection with psql, clicking the "Open psql" button on the menu.-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Business Website</title>
+	<!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">-->
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+	<!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+	{% load static %}
+	<link href=" {% static '/EIA/styleEIAquery.css' %}" rel="stylesheet" type="text/css">
+	<!--<style type="text/css">
+		.clock
+		{
+			height: 7%;
+			color: white;
+			font-family: "Roboto", sans-serif;
+			font-size: 30px;
+			text-align: center;
+		}
+	</style>-->
+<style type="text/css">
+/*#StartRange + .select2 .select2-selection__rendered
+{
+	background-color: darkblue;
+}*/
+#select2-StartRange-results
+{
+	visibility: 0%;
+}
+</style>
+</head>
+<body>
+	<!--<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+	<!--<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />-->
+	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
+	<header>
+		<!--<div id="row-menu" class="row">
+			<button class="active"> HOME </button>
+			<button> ABOUT </button>
+			<button> SERVICES </button>
+			<button> CONTACT </button>
+			<button> NEWS </button>
+			<button> FAQ </button>-->
+			<!--<ul class="main-nav">
+				<li class="active"><a href=""> HOME </a></li>
+				<li><a href=""> ABOUT </a></li>
+				<li><a href=""> SERVICES </a></li>
+				<li><a href=""> CONTACT </a></li>
+				<li><a href=""> NEWS </a></li>
+				<li><a href=""> FAQ </a></li>
+			</ul>
+		</div>-->
+		<div class="hero">
+			<ul class="main-nav">
+				<li class="active"><a href=""> HOME </a></li>
+				<li><a href=""> ABOUT </a></li>
+				<li><a href=""> SERVICES </a></li>
+				<li><a href=""> CONTACT </a></li>
+				<li><a href=""> NEWS </a></li>
+				<li><a href=""> FAQ </a></li>
+			</ul>
+		</div>
+		<div class="container">
+			<div class="RenewableEnergyTrackerTitle">
+				<p>
+					Renewable Energy Tracker
+				</p>
+			</div>
+			{% csrf_token %}
+			<!--<table>
+				{{ form.as_table }}
+			</table>-->
+			<form method="post" id="QueryForm" action="{% url 'EIA-query' %}" class="plant-data-form">
+				{% csrf_token %}
+				<div class="row">
+					<div class="form-group col-lg-2">
+					</div>
+					<div class="group1 col-lg-2">
+						<label class="FormLabelSet">Identification</label>
+					</div>
+					<div class="form-group col-lg-4">
+					</div>
+					<div class="group1 col-lg-2">
+						<label class="FormLabelSet">Location</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-lg-2">
+						<label>Plant ID</label>
+						<select class="form-control select2" name="eiaplantidselect">
+							<option> --------- </option>
+					    	{% for anotherresult in showanother %}
+					        	<option> {{anotherresult}} </option>
+					    	{% endfor %}
+						</select>
+					</div>
+					<div class="form-group col-lg-2">
+						<label>Unit</label>
+						<select class="form-control select2" name="eiaunitselect">
+							<option> --------- </option>
+					    	{% for unitresults in showunit %} 
+					        	<option> {{unitresults}} </option>
+					    	{% endfor %}
+						</select>
+					</div>
+					<div class="form-group col-lg-2">
+						<label>Plant Name</label>
+						<select class="form-control select2" name="eiaplantnameselect">
+							<option> --------- </option>
+					    	{% for plantnameresults in showplantname %} 
+					        	<option> {{plantnameresults}} </option>
+					    	{% endfor %}
+						</select>
+					</div>
+					<div class="form-group col-lg-2">
+						<label>Latitude</label>
+						<select class="form-control select2" name="eialatitudeselect">
+							<option> --------- </option>
+					    	{% for latituderesults in showlatitude %}
+					        	<option> {{latituderesults}} </option>
+					    	{% endfor %}
+						</select>
+					</div>
+					<div class="form-group col-lg-2">
+						<label>Start Range</label>
+						<select id=StartRange class="form-control select2"> <!--reason corresponding select box width larger is due to class being set to "select2" and not "form-control select"-->
+							<option> --------- </option>
+					        <option> = </option>
+					        <option> >= </option>
+					        <option> <= </option>
+					        <option> < </option>
+					        <option> > </option>
+						</select>
+					</div>
+					<div class="form-group col-lg-2">
+						<label>Ending Range</label>
+						<select id="EndingRange" class="form-control select2">
+							<option> --------- </option>
+						</select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-lg-2">
+						<label>Status</label>
+						<select class="form-control select2" name="eiastatusselect">
+							<option> --------- </option>
+					    	{% for statusresults in showstatus %}
+					        	<option> {{statusresults}} </option>
+					    	{% endfor %}
+						</select>
+					</div>
+					<div class="form-group col-lg-2">
+						<label>Capacity</label>
+						<select class="form-control select2" name="eiamwcapacityselect">
+							<option> --------- </option>
+					    	{% for mwcapacityresults in showmwcapacity %}
+					        	<option> {{mwcapacityresults}} </option>
+					    	{% endfor %}
+						</select>
+					</div>
+					<!--<div class="form-group col-lg-4">
+						<label>Technology</label>
+						<select class="form-control select2" name="eiatechnologyselect">
+							<option> --------- </option>
+					    	{% for technologyresults in showtechnology %}
+					        	<option> {{mwcapacityresults}} </option>
+					    	{% endfor %}
+						</select>
+					</div>-->
+				</div>
+				<div class="AfterParametersSpaceFiller"></div>
+				<div class="RenewableEnergyTrackerButtonContainer">
+					<button class="RenewableEnergyTrackerButton" type="submit">QUERY</button>
+				</div>
+				<div class="AfterRenewableEnergyTrackerButtonSpaceFiller"></div>
+				<!--<table class="QueryResults">
+					<tr>
+						<th>Selected Plant ID</th>
+    					<th>Selected Unit</th>
+    					<th>Selected Plant Name</th>
+					</tr>
+					<tr>
+						<td>{{showselectedplantid}}</td>
+    					<td>{{showselectedunit}}</td>
+    					<td>{{showselectedplantname}}</td>
+					</tr>
+				</table>-->
+			</form>
+			<div class="BeforeRenewableEnergyTrackerResultsTableSpaceFiller"></div>
+			<div class="ReturnedRecordNumberTable">
+				<table>
+					<tr class="ReturnedRecordNumber"> {{showreturnedrecordnumber}} </tr>
+				</table>
+			</div>
+			<div class="QueryTableResults">
+				<!--<table class="ReturnedRecordNumberTable">
+					<tr class="ReturnedRecordNumber"> Number of Returned Records:  </tr>
+				</table>-->
+				<table class="QueryResults">
+					<thead>
+						<tr>
+							<th>Plant ID</th>
+    						<th>Unit</th>
+    						<th>Plant Name</th>
+    						<th>Status</th>
+    						<th>MW Capacity</th>
+    						<th>Latitude</th>
+						</tr>
+					</thead>
+					{% if shownoresultsflag == True %}
+						<tr>
+							<td> No Results Found. </td>
+							<td> No Results Found. </td>
+							<td> No Results Found. </td>
+							<td> No Results Found. </td>
+							<td> No Results Found. </td>
+							<td> No Results Found. </td>
+						</tr>
+					{% elif shownoresultsflag == False %}
+						{% for row in returnedqueryresults %}
+							<tr id="ThisRow">
+								{% for i in row %}
+									{% if row.1 == i %}
+										<td>
+											<a href="EIAquery.html">
+												<div style="height:100%;width:100%"> {{ i }} </div>
+											</a>
+										</td>
+									{% else %}
+										<td>
+											{{ i }}
+										</td>
+									{% endif %}
+									<!--<td> {{ column }} </td>-->
+								{% endfor %}
+							</tr>
+						{% endfor %}
+					{% endif %}
+					<!--<tr>
+						<td>{{showselectedplantid}}</td>
+    					<td>{{showselectedunit}}</td>
+    					<td>{{showselectedplantname}}</td>
+					</tr>-->
+				</table>
+			</div>
+			<div class="AfterRenewableEnergyTrackerResultsTableSpaceFiller"></div>
+			<!--<div class="AfterParametersSpaceFiller"></div>
+			<div class="RenewableEnergyTrackerButtonContainer">
+				<button class="RenewableEnergyTrackerButton">QUERY</button>
+			</div>
+			<div class="AfterRenewableEnergyTrackerButtonSpaceFiller"></div>-->
+		</div>
+		<!--<div id="flip"></div>-->
+		<!--<div class="queryparams">
+			<form>-->
+				<!--<div class="btn-group">
+					<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Action 
+					</button>
+  					<div class="dropdown-menu">
+    					<a class="dropdown-item" href="#">Action</a>
+    					<a class="dropdown-item" href="#">Another action</a>
+    					<a class="dropdown-item" href="#">Something else here</a>
+    				<div class="dropdown-divider"></div>
+    				<a class="dropdown-item" href="#">Separated link</a>
+  				</div>
+				<div class="btn-group">
+					<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Action 
+					</button>
+  					<div class="dropdown-menu">
+    					<a class="dropdown-item" href="#">Action</a>
+    					<a class="dropdown-item" href="#">Another action</a>
+    					<a class="dropdown-item" href="#">Something else here</a>
+    				<div class="dropdown-divider"></div>
+    				<a class="dropdown-item" href="#">Separated link</a>
+  				</div>-->
+  				<!--<div class="container">
+					<div class="row">
+					    <form class="col-md-4">
+					        <label>Select</label>
+					        <select class="form-control select2">
+					        	{% for results in showid %} 
+					        		<option> {{results.eiaplantid}} </option>
+					        	{% endfor %}
+					    	</select>
+					    </form>
+				 	</div>
+				</div>-->
+  				<!--<div class="btn-group">
+  					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  						Dropdown
+  					</button>
+  					<div class="dropdown-menu pre-scrollable" aria-labelledby="dropdownMenu2">
+  						{% for results in showid %}
+    					<button class="dropdown-item" type="button"> {{results.eiaplantid}} </button>
+  						{% endfor %}
+  					</div>
+				</div>
+				<div class="btn-group">
+  					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  						Another dropdown
+  					</button>
+  					<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+    					<button class="dropdown-item" type="button">Action</button>
+  					</div>
+				</div>-->
+				<!--<div class="dropdown">
+					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    	ID
+				  	</button>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+						<div class="d-inline">
+							<button class="dropdown-item" type="button">----------</button>
+						</div>
+					</div>
+				</div>
+				<div class="dropdown">
+					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    	Plant Name
+				  	</button>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+						<button class="dropdown-item" type="button"> Action </button>
+					</div>
+				</div>
+				<div class="dropdown">
+					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    	Project Status
+				  	</button>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+						<button class="dropdown-item" type="button">Action</button>
+					    <button class="dropdown-item" type="button">Another action</button>
+					    <button class="dropdown-item" type="button">Something else here</button>
+					</div>
+				</div>-->
+				<!--<div class="btn-group">
+					<button type="button" class="btn btn-danger">Action</button>
+					<button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    	<span class="sr-only">Toggle Dropdown</span>
+				 	</button>
+					<div class="dropdown-menu">
+				    	<a class="dropdown-item" href="#">Action</a>
+				    	<a class="dropdown-item" href="#">Another action</a>
+				    	<a class="dropdown-item" href="#">Something else here</a>
+				    	<div class="dropdown-divider"></div>
+				    	<a class="dropdown-item" href="#">Separated link</a>
+					</div>
+				</div>-->
+			<!--</form>
+		</div>-->
+		<!--<div id="ClockDisplay" class="clock"></div>
+			<script type="text/javascript">
+
+				function clockTime(){
+					var date = new Date();
+					var h = date.getHours();
+					var m = date.getMinutes();
+					var s = date.getSeconds();
+					var session = "AM"
+
+					if(h == 0){
+						h == 12;
+					}
+
+					if (h > 12){
+						h = h - 12;
+						session = "PM";
+					}
+
+					h = (h < 10) ? "0" + h : h;
+					m = (m < 10) ? "0" + m : m;
+					s = (s < 10) ? "0" + s : s;
+
+					var time = h + ":" + m + ":" + s + " " + session;
+					document.getElementById("ClockDisplay").innerText = time;
+					document.getElementById("ClockDisplay").textContent = time;
+				}
+
+				clockTime()
+				setInterval(clockTime, 1000);
+
+			</script>-->
+	</header>
+	<!--<script type="text/javascript">
+		$('option').mousedown(function(e) {
+		    e.preventDefault();
+		    var originalScrollTop = $(this).parent().scrollTop();
+		    console.log(originalScrollTop);
+		    $(this).prop('selected', $(this).prop('selected') ? false : true);
+		    var self = this;
+		    $(this).parent().focus();
+		    setTimeout(function() {
+		        $(self).parent().scrollTop(originalScrollTop);
+		    }, 0);
+	    
+	    	return false;
+		});
+	</script>-->
+	<script>
+    	$('.select2').select2();
+	</script>
+	<script type="text/javascript">
+		$('#StartRange').select2().change(function(){
+			if ($(this).val() == '---------') {
+		        $('#EndingRange').next(".select2-container").hide();
+		    }
+		    else {
+		        $('#EndingRange').next(".select2-container").show();
+		    }
+		})
+	</script>
+	<script type="text/javascript">
+		$('#StartRange').change(function() {
+			/*OptionsFunction();*/
+			if($('#StartRange').val() == '>'){
+		        $('#EndingRange').hide();
+		    } else {
+		        $('#EndingRange').show();
+		    }
+		})
+
+		/*function OptionsFunction() {
+			
+			var select = document.getElementById('#EndingRange');
+	    	var option = document.createElement('option');
+
+	    	if($('#StartRange').val() == '>'){
+		        $('#EndingRange').hide();
+		    } else {
+		        $('#EndingRange').show();
+		    }
+	    	option.innerText = "><";
+
+	        select.appendChild(option);
+
+		};*/
+	</script>
+	<!--<script type="text/javascript">
+		$(document).ready(function(){
+			$("#ThisRow td:nth-child(2)").click(function() {
+				myfunction();
+			});
+		});
+
+		function myfunction() {
+			window.open('www.google.com', '_self')
+		};
+	</script>-->
+	<!--<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>-->
+</body>
+</html>

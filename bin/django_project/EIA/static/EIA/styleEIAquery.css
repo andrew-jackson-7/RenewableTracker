@@ -1,0 +1,243 @@
+*
+{
+	margin: 0;
+	padding: 0;
+}
+
+header
+{
+	background-image:linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(IMG_0289_2.JPG);
+	height: 135vh;
+	background-size: cover;
+	background-position: center;
+}
+
+.hero
+{
+	height: 15%;
+	/*margin: 0 auto;
+	text-align: center;
+	/*display: table;*/
+	/*position: absolute;*/
+	/*margin-left: 0px;*/
+	/*margin-top: 150px;*/
+	/*width: 1200px;*/
+	display: float right;
+}
+
+.main-nav
+{
+	float: right;
+	list-style: none;
+	margin-top: 28px;
+}
+
+.main-nav li
+{
+	display: inline-block;
+}
+
+.main-nav li a
+{
+	color: white;
+	text-decoration: none;
+	padding: 5px 20px;
+	font-family: "Roboto", sans-serif;
+	font-size: 15px;
+}
+
+.main-nav li.active a
+{
+	border: 1px solid white;
+}
+
+.main-nav li a:hover
+{
+	border: 1px solid white;
+	/*transition: all 0.3s ease-in*/
+}
+
+.clock
+{
+	height: 7%;
+	color: white;
+	font-family: "Roboto", sans-serif;
+	font-size: 30px;
+	text-align: center;
+}
+
+.queryparams
+{
+	color: white;
+	text-transform: uppercase;
+	font-size: 70px;	
+	text-align: center;
+}
+
+body
+{
+	font-family: monospace;
+    /*overflow-x: hidden;*/
+}
+
+.RenewableEnergyTrackerTitle
+{
+	width: 600px;
+	margin:0 auto;
+}
+
+p
+{
+	color: white;
+	text-align: center;
+	font-family: monospace;
+	font-size: 30px;
+}
+
+.FormLabelSet
+{
+	color: white;
+	text-align: center;
+	font-family: monospace;
+	font-size: 20px;
+}
+
+.row
+{
+	width: 800px;
+	border: 1px solid red;
+	margin:0 auto;
+}
+
+/*.row2
+{
+	width: 1000px;
+	border: 1px solid red;
+	margin:0 auto;
+}*/
+
+.plant-data-form
+{
+	width: 800px;
+	border: 2px solid white;
+	margin:0 auto;
+}
+
+.container
+{
+	text-transform: uppercase;
+	font-family: "Roboto", sans-serif;
+	width: 1200px;
+	border: 1px solid white;
+}
+
+.form-control
+{
+	width: 100px;
+}
+
+label
+{
+	color: white;
+	text-align: center;
+}
+
+.AfterParametersSpaceFiller
+{
+	height: 20px;
+}
+
+.RenewableEnergyTrackerButtonContainer
+{
+	text-align: center;
+	font-family: monospace;
+	font-size: 30px;
+}
+
+.RenewableEnergyTrackerButton
+{
+	color: white;
+	border: 1px solid white;
+	background: none;
+}
+
+.RenewableEnergyTrackerButton:hover
+{
+	cursor: pointer;
+	background-color: darkorange;
+	transition: all 0.5s ease-in;
+}
+
+.AfterRenewableEnergyTrackerButtonSpaceFiller
+{
+	height: 10px;
+}
+
+.BeforeRenewableEnergyTrackerResultsTableSpaceFiller
+{
+	height: 10px;
+}
+
+.QueryTableResults
+{
+	height: 265px;
+	overflow: scroll;
+}
+
+.ReturnedRecordNumberTable
+{
+	/*background-color: white;*/
+	color: white;
+	font-family: sans-serif;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.QueryResults
+{
+	color: white;
+ 	font-family: sans-serif;
+ 	/*border-collapse: collapse;*/
+ 	width: 100%;
+}
+
+.QueryResults thead th
+{
+	position: sticky; top: 0;
+	background-color: gray;
+}
+
+td, th
+{
+ 	border: 1px solid white;
+ 	text-align: left;
+ 	padding: 8px;
+ 	/*font-size: 12px;*/
+}
+
+tr:nth-child(even)
+{
+ 	background-color: gray;
+}
+
+tr:hover
+{
+	background-color: darkorange;
+	transition: all 0.5s ease-in;
+}
+
+.AfterRenewableEnergyTrackerResultsTableSpaceFiller
+{
+	height: 10px;
+}
+
+.select2-container .select2-selection--single
+{
+    height:34px !important;
+}
+
+.select2-container--default .select2-selection--single
+{
+     border: 1px solid #ccc !important; 
+     border-radius: 0px !important; 
+}
